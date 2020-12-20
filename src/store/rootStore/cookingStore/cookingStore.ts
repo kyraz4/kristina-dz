@@ -9,6 +9,7 @@ export class CookingStore {
 
         makeAutoObservable(this, {
             rootStore: observable,
+            currentText: observable,
             allCookersObj: observable,
 
         });
@@ -17,9 +18,35 @@ export class CookingStore {
 
     }
 
+
+
+
+
+    currentText:string = ''; 
+
     rootStore: RootStore;
 
     allCookersObj: cookersInterface[] = [];
+
+
+    setCurrentText = ( event: React.ChangeEvent<HTMLInputElement> ) => {
+      this.currentText = event.currentTarget.value;
+    }
+
+
+
+    addNewCooker = () => {
+
+        this.allCookersObj.push({
+            id: 3,
+       name: this.currentText,
+        cookItems: []
+        });
+
+        this.refreshJson();
+
+    }
+
 
 
     setCookersState = ( newCookers:cookersInterface[] ) => {
@@ -40,20 +67,18 @@ export class CookingStore {
 
     refreshJson = (  ) => {
     
-
-
         const newJson =  JSON.stringify(this.allCookersObj);
-
-
-
-
+   
     }
 
     deleteDish = ( cookerId: number, dishId: number  ) => {
 
+
+        console.log("cookerId",cookerId," dishId", dishId );
+
         this.allCookersObj.forEach(el => {
                if (el.id === cookerId) {
-                   el.cookItems.filter(dish => dish.id !== dishId);
+                el.cookItems = el.cookItems.filter(dish => dish.id !== dishId);
                }
         });
 
@@ -61,13 +86,7 @@ export class CookingStore {
           
     }
 
-    addNewCooker = () => {
-
-
-        
-        this.refreshJson();
-
-    }
+  
 
 
 
