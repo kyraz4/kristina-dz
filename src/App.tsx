@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { RootStore } from './store/rootStore/rootStore';
 import React, { useEffect } from 'react';
+import { cookersInterface } from './api/api';
 
 
 export const AppContainer = styled.div`
@@ -19,9 +20,9 @@ export const AppContainer = styled.div`
 
 
 
-
 export interface props {
-    rootStore?: RootStore
+    rootStore?: RootStore,
+
 }
 
 
