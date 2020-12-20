@@ -25,9 +25,9 @@ export interface props {
 
 const App: React.FC<props> = inject('rootStore')( observer(({ rootStore }) => {
 
-  return <AppContainer>
+  return (<AppContainer>
       <h1>   Приложение менеджера ресторана </h1>
-  </AppContainer>
+  </AppContainer>)
 
 
 }));
