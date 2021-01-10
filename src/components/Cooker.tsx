@@ -40,6 +40,9 @@ min-height:490px;
 
 const Cooker: React.FC<CookerProps> = inject('rootStore')( observer(({ rootStore, cooker }) => {
 
+  const { onDishNameChange, addNewDish } = rootStore?.cookingStore!;
+ 
+
   return (  <CookerContainer>
           <p>
            id: { cooker.id }</p>
@@ -52,6 +55,18 @@ const Cooker: React.FC<CookerProps> = inject('rootStore')( observer(({ rootStore
             {  cooker.cookItems.map(el => {
               return <Dish parentId = {cooker.id}  dish = {el} />
             }) } 
+            <div>
+            <p>новое блюдо</p>
+
+            <input type = 'text'  value = {cooker.newDishName}  onChange = {(event: React.ChangeEvent<HTMLInputElement>) => { 
+                   onDishNameChange(cooker.id , event);
+             }} />
+             <button  onClick = {() => {
+                 addNewDish(cooker.id);
+             } } > Добавить </button> 
+            </div>
+      
+
              </div>
       </ CookerContainer>)
 

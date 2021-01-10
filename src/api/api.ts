@@ -15,7 +15,7 @@ export interface cookersInterface {
     name: string,
     id: number,
     cookItems: cookItem[]
-
+    newDishName: string,
 
 }
 

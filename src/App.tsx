@@ -56,31 +56,91 @@ overflow-y: auto;
 
 
 
+const CookerHeaderContaner = styled.div`
+
+display: flex;
+justify-content: space-between;
+max-width: 30%;
+
+`;
+
+
 const App: React.FC<props> = inject('rootStore')(observer(({ rootStore }) => {
 
 
-  const { getAllCookers, allCookersObj, setCurrentText, currentText, addNewCooker } = rootStore!.cookingStore;
+  const { getAllCookers, allCookersObj, setCurrentText, currentText, addNewCooker,
+     setChoosenChangeDishCooker, choosenChangeDishCooker, setChoosenChangeDish, choosenChangeDish, changeCookerDish } = rootStore!.cookingStore;
 
 
   useEffect(() => {
     getAllCookers();
   }, []);
 
+  useEffect(() => {
+    
+  }, [choosenChangeDish, choosenChangeDishCooker]);
+
 
   return (<AppContainer>
     <h1>   Приложение менеджера ресторана </h1>
-    <button onClick={() => {
-      addNewCooker();
-    }} > Добавить повара </button>
-    <input type='text' value={currentText} onChange={(event: React.ChangeEvent<HTMLInputElement>) => { setCurrentText(event);
-    }} />
-    <form>
-      <select >
-        {allCookersObj.map(el => {
-          return <option> {el.name} </option>
-        })}
-      </select>
-    </form>
+
+
+   <CookerHeaderContaner>
+
+
+   <div>
+      <button onClick={() => {
+        addNewCooker();
+      }} > Добавить повара </button>
+      <input type='text' value={currentText} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+        setCurrentText(event);
+      }} />
+    </div>
+
+
+    <div>
+    <p> Поменять местами блюда </p>
+       
+      <form>
+       
+        <select defaultChecked = {false} onChange = {setChoosenChangeDishCooker} >
+        <option selected disabled>Выберите повара</option>
+          {allCookersObj.map(el => {
+            return <option > {el.name} </option>
+          })}
+        </select>
+     
+      </form>
+      {
+          choosenChangeDishCooker !== null &&  <select onChange = {setChoosenChangeDish}  >
+                <option selected disabled>Выберите блюдо</option>
+          {choosenChangeDishCooker.cookItems.map(el => {
+            return <option > {el.name} </option>
+          })}
+        </select>
+        }
+        {
+          choosenChangeDish !== null &&  <div>
+            <p>  Направить повару </p>
+            <select onChange = {changeCookerDish} >
+            <option selected disabled>Выберите повара</option>
+          {allCookersObj.map(el => {
+
+            return el.id !== choosenChangeDishCooker?.id &&  <option  > {el.name} </option> 
+          })}
+        </select></div>
+        }
+    </div>
+
+
+
+   </CookerHeaderContaner>
+
+ 
+
+
+
+
     <CookersContainer >
 
       {
